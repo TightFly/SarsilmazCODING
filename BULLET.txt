@@ -1,0 +1,23 @@
+						Bullet haberleşme
+
+
+verici
+libcamera-vid -t 0 --flush --framerate=30 --width=1640 --height=1232 --inline -o udp://192.168.1.100:8080
+
+libcamera-vid -t 0 --flush --framerate=30 --width=1640 --height=1232 --inline --listen -o tcp://192.168.1.100:8080
+
+
+
+alici
+ffplay udp://192.168.1.100:8080 -vf "transpose=2,transpose=2" -fflags nobuffer -flags low_delay -framedrop
+
+ffplay tcp://192.168.1.100:8080 -vf "setpts=N/30" -fflags nobuffer -flags low_delay -framedrop
+
+
+tcp 0.5s 192.168.1.100 rasp ip		bullet
+udp 0.55s 192.168.1.1 litebeam 			(192.168.1.100 bullet rasp)
+
+nano tcp.sh
+
+"rtsp://192.168.144.25:8554/main.264", cv2.CAP_FFMPEG
+Siyi HM30 Cam	
